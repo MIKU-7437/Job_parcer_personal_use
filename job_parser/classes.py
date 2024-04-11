@@ -31,6 +31,10 @@ class Vacancy:
     def __ge__(self, other):
         return self.salary >= other.salary
 
+    def __ne__(self, other):
+        return self.salary != other.salary
+
+
     def __iter__(self):
         self.value = 0
         return self.value
@@ -48,6 +52,17 @@ class CountMixin:
     def get_count_of_vacancy(self):
         """
         Вернуть количество вакансий от текущего сервиса.
+        Получать количество необходимо динамически из файла.
+        """
+        with open(self.data_file, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+            for item in data:
+                return len(item)
+
+    @property
+    def get_vacancy(self):
+        """
+        Вернуть вакансии от текущего сервиса.
         Получать количество необходимо динамически из файла.
         """
         with open(self.data_file, 'r', encoding='utf-8') as file:
